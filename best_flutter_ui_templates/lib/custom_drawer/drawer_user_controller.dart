@@ -8,26 +8,14 @@ import 'package:flutter/material.dart';
 
 class DrawerUserController extends StatefulWidget {
   const DrawerUserController({
-    Key? key,
+    super.key,
     this.drawerWidth = 250,
-    // this.onDrawerCall,
-    // this.screenView,
-    // this.animatedIconData = AnimatedIcons.arrow_menu,
-    // this.menuView,
-    // this.drawerIsOpen,
-    // this.screenIndex,
-  }) : super(key: key);
+  });
 
   final double drawerWidth;
-  // final Function(DrawerIndex)? onDrawerCall;
-  // final Widget? screenView;
-  // final Function(bool)? drawerIsOpen;
-  // final AnimatedIconData? animatedIconData;
-  // final Widget? menuView;
-  // final DrawerIndex? screenIndex;
 
   @override
-  _DrawerUserControllerState createState() => _DrawerUserControllerState();
+  State<DrawerUserController> createState() => _DrawerUserControllerState();
 }
 
 class _DrawerUserControllerState extends State<DrawerUserController>

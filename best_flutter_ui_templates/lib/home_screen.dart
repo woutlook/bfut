@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'model/homelist.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  const MyHomePage({super.key});
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -65,6 +65,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                 top: 0, left: 12, right: 12),
                             physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.vertical,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: multiple ? 2 : 1,
+                              mainAxisSpacing: 12.0,
+                              crossAxisSpacing: 12.0,
+                              childAspectRatio: 1.5,
+                            ),
                             children: List<Widget>.generate(
                               homeList.length,
                               (int index) {
@@ -93,13 +100,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                   },
                                 );
                               },
-                            ),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: multiple ? 2 : 1,
-                              mainAxisSpacing: 12.0,
-                              crossAxisSpacing: 12.0,
-                              childAspectRatio: 1.5,
                             ),
                           );
                         }
@@ -177,12 +177,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
 class HomeListView extends StatelessWidget {
   const HomeListView(
-      {Key? key,
+      {super.key,
       this.listData,
       this.callBack,
       this.animationController,
-      this.animation})
-      : super(key: key);
+      this.animation});
 
   final HomeList? listData;
   final VoidCallback? callBack;

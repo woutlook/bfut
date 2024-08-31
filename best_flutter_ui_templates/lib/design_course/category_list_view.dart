@@ -4,7 +4,7 @@ import 'package:bfut/main.dart';
 import 'package:flutter/material.dart';
 
 class CategoryListView extends StatefulWidget {
-  const CategoryListView({Key? key, this.callBack}) : super(key: key);
+  const CategoryListView({super.key, this.callBack});
 
   final Function()? callBack;
   @override
@@ -81,12 +81,11 @@ class _CategoryListViewState extends State<CategoryListView>
 
 class CategoryView extends StatelessWidget {
   const CategoryView(
-      {Key? key,
+      {super.key,
       this.category,
       this.animationController,
       this.animation,
-      this.callback})
-      : super(key: key);
+      this.callback});
 
   final VoidCallback? callback;
   final Category? category;

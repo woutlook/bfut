@@ -4,13 +4,12 @@ import 'package:intl/intl.dart';
 
 class CustomCalendarView extends StatefulWidget {
   const CustomCalendarView(
-      {Key? key,
+      {super.key,
       this.initialStartDate,
       this.initialEndDate,
       this.startEndDateChange,
       this.minimumDate,
-      this.maximumDate})
-      : super(key: key);
+      this.maximumDate});
 
   final DateTime? minimumDate;
   final DateTime? maximumDate;

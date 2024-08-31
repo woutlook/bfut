@@ -6,7 +6,7 @@ import 'package:vector_math/vector_math.dart' as vector;
 class WaveView extends StatefulWidget {
   final double percentageValue;
 
-  const WaveView({Key? key, this.percentageValue = 100.0}) : super(key: key);
+  const WaveView({super.key, this.percentageValue = 100.0});
   @override
   _WaveViewState createState() => _WaveViewState();
 }
@@ -84,6 +84,7 @@ class _WaveViewState extends State<WaveView> with TickerProviderStateMixin {
         builder: (context, child) => Stack(
           children: <Widget>[
             ClipPath(
+              clipper: WaveClipper(animationController!.value, animList1),
               child: Container(
                 decoration: BoxDecoration(
                   color: FitnessAppTheme.nearlyDarkBlue.withOpacity(0.5),
@@ -102,9 +103,9 @@ class _WaveViewState extends State<WaveView> with TickerProviderStateMixin {
                   ),
                 ),
               ),
-              clipper: WaveClipper(animationController!.value, animList1),
             ),
             ClipPath(
+              clipper: WaveClipper(animationController!.value, animList2),
               child: Container(
                 decoration: BoxDecoration(
                   color: FitnessAppTheme.nearlyDarkBlue,
@@ -123,7 +124,6 @@ class _WaveViewState extends State<WaveView> with TickerProviderStateMixin {
                       topRight: Radius.circular(80.0)),
                 ),
               ),
-              clipper: WaveClipper(animationController!.value, animList2),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 48),

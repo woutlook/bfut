@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'hotel_app_theme.dart';
 
 class SliderView extends StatefulWidget {
-  const SliderView({Key? key, this.onChangedistValue, this.distValue})
-      : super(key: key);
+  const SliderView({super.key, this.onChangedistValue, this.distValue});
 
   final Function(double)? onChangedistValue;
   final double? distValue;

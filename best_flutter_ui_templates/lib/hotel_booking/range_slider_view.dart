@@ -2,8 +2,7 @@ import 'package:bfut/hotel_booking/hotel_app_theme.dart';
 import 'package:flutter/material.dart';
 
 class RangeSliderView extends StatefulWidget {
-  const RangeSliderView({Key? key, this.values, this.onChangeRangeValues})
-      : super(key: key);
+  const RangeSliderView({super.key, this.values, this.onChangeRangeValues});
 
   final Function(RangeValues)? onChangeRangeValues;
   final RangeValues? values;

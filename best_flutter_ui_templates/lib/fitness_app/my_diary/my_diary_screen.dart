@@ -8,7 +8,7 @@ import 'package:bfut/fitness_app/my_diary/water_view.dart';
 import 'package:flutter/material.dart';
 
 class MyDiaryScreen extends StatefulWidget {
-  const MyDiaryScreen({Key? key, this.animationController}) : super(key: key);
+  const MyDiaryScreen({super.key, this.animationController});
 
   final AnimationController? animationController;
   @override

@@ -6,15 +6,14 @@ import 'custom_calendar.dart';
 
 class CalendarPopupView extends StatefulWidget {
   const CalendarPopupView(
-      {Key? key,
+      {super.key,
       this.initialStartDate,
       this.initialEndDate,
       this.onApplyClick,
       this.onCancelClick,
       this.barrierDismissible = true,
       this.minimumDate,
-      this.maximumDate})
-      : super(key: key);
+      this.maximumDate});
 
   final DateTime? minimumDate;
   final DateTime? maximumDate;

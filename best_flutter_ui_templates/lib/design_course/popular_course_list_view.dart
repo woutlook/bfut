@@ -4,7 +4,7 @@ import 'package:bfut/main.dart';
 import 'package:flutter/material.dart';
 
 class PopularCourseListView extends StatefulWidget {
-  const PopularCourseListView({Key? key, this.callBack}) : super(key: key);
+  const PopularCourseListView({super.key, this.callBack});
 
   final Function()? callBack;
   @override
@@ -40,6 +40,12 @@ class _PopularCourseListViewState extends State<PopularCourseListView>
               padding: const EdgeInsets.all(8),
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.vertical,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 32.0,
+                crossAxisSpacing: 32.0,
+                childAspectRatio: 0.8,
+              ),
               children: List<Widget>.generate(
                 Category.popularCourseList.length,
                 (int index) {
@@ -61,12 +67,6 @@ class _PopularCourseListViewState extends State<PopularCourseListView>
                   );
                 },
               ),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 32.0,
-                crossAxisSpacing: 32.0,
-                childAspectRatio: 0.8,
-              ),
             );
           }
         },
@@ -77,12 +77,11 @@ class _PopularCourseListViewState extends State<PopularCourseListView>
 
 class CategoryView extends StatelessWidget {
   const CategoryView(
-      {Key? key,
+      {super.key,
       this.category,
       this.animationController,
       this.animation,
-      this.callback})
-      : super(key: key);
+      this.callback});
 
   final VoidCallback? callback;
   final Category? category;

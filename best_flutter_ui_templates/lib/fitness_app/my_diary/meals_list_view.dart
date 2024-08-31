@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 
 class MealsListView extends StatefulWidget {
   const MealsListView(
-      {Key? key, this.mainScreenAnimationController, this.mainScreenAnimation})
-      : super(key: key);
+      {super.key, this.mainScreenAnimationController, this.mainScreenAnimation});
 
   final AnimationController? mainScreenAnimationController;
   final Animation<double>? mainScreenAnimation;
@@ -84,8 +83,7 @@ class _MealsListViewState extends State<MealsListView>
 
 class MealsView extends StatelessWidget {
   const MealsView(
-      {Key? key, this.mealsListData, this.animationController, this.animation})
-      : super(key: key);
+      {super.key, this.mealsListData, this.animationController, this.animation});
 
   final MealsListData? mealsListData;
   final AnimationController? animationController;
