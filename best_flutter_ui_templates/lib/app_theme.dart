@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class AppTheme {
-  AppTheme._();
+class AppTheme1 {
+  AppTheme1._();
 
   static const Color notWhite = Color(0xFFEDF0F2);
   static const Color nearlyWhite = Color(0xFFFEFEFE);
@@ -96,68 +97,56 @@ class AppTheme {
   );
 }
 
-const lightColorScheme = ColorScheme(
-  primary: Color(0xFF1A73E8),
-  secondary: Color(0xFF1A73E8),
-  surface: AppTheme.white,
-  error: Color(0xFFB00020),
-  onPrimary: AppTheme.white,
-  onSecondary: AppTheme.white,
-  onSurface: AppTheme.darkText,
-  onError: AppTheme.white,
-  brightness: Brightness.light,
-);
-
 // This theme was made for FlexColorScheme version 6.1.1. Make sure
 // you use same or higher version, but still same major version. If
 // you use a lower version, some properties may not be supported. In
 // that case you can also remove them after copying the theme to your app.
 final lightTheme = FlexThemeData.light(
-  scheme: FlexScheme.blue,
-  surfaceMode: FlexSurfaceMode.highSurfaceLowScaffold,
-  blendLevel: 9,
-  subThemesData: const FlexSubThemesData(
-    defaultRadius: 8.0,
-    unselectedToggleIsColored: true,
-    sliderTrackHeight: 2,
-    inputDecoratorRadius: 23.0,
-    inputDecoratorUnfocusedHasBorder: false,
-    fabUseShape: true,
-    fabAlwaysCircular: true,
-    chipRadius: 16.0,
-    cardRadius: 20.0,
-    dialogRadius: 18.0,
-    timePickerDialogRadius: 18.0,
-    dialogElevation: 6.0,
-  ),
-  keyColors: const FlexKeyColors(
-    useSecondary: true,
-    useTertiary: true,
-  ),
-  visualDensity: FlexColorScheme.comfortablePlatformDensity,
-  useMaterial3: true,
-  swapLegacyOnMaterial3: true,
-  // To use the playground font, add GoogleFonts package and uncomment
-  // fontFamily: GoogleFonts.notoSans().fontFamily,
-);
+    scheme: FlexScheme.blue,
+    surfaceMode: FlexSurfaceMode.highSurfaceLowScaffold,
+    blendLevel: 8,
+    subThemesData: const FlexSubThemesData(
+      defaultRadius: 8.0,
+      unselectedToggleIsColored: true,
+      sliderTrackHeight: 2,
+      inputDecoratorRadius: 16.0,
+      inputDecoratorUnfocusedHasBorder: false,
+      fabUseShape: true,
+      fabAlwaysCircular: true,
+      chipRadius: 16.0,
+      cardRadius: 16.0,
+      dialogRadius: 16.0,
+      timePickerDialogRadius: 16.0,
+      dialogElevation: 4.0,
+    ),
+    keyColors: const FlexKeyColors(
+      useSecondary: true,
+      useTertiary: true,
+    ),
+    visualDensity: FlexColorScheme.comfortablePlatformDensity,
+    useMaterial3: true,
+    swapLegacyOnMaterial3: true,
+    // To use the playground font, add GoogleFonts package and uncomment
+    fontFamily: GoogleFonts.notoSans().fontFamily,
+    colorScheme: flexSchemeLight);
 
 final darkTheme = FlexThemeData.dark(
   scheme: FlexScheme.blue,
   surfaceMode: FlexSurfaceMode.level,
-  blendLevel: 15,
+  blendLevel: 8,
   subThemesData: const FlexSubThemesData(
     defaultRadius: 8.0,
     unselectedToggleIsColored: true,
     sliderTrackHeight: 2,
-    inputDecoratorRadius: 23.0,
+    inputDecoratorRadius: 16.0,
     inputDecoratorUnfocusedHasBorder: false,
     fabUseShape: true,
     fabAlwaysCircular: true,
     chipRadius: 16.0,
-    cardRadius: 20.0,
-    dialogRadius: 18.0,
-    timePickerDialogRadius: 18.0,
-    dialogElevation: 6.0,
+    cardRadius: 16.0,
+    dialogRadius: 16.0,
+    timePickerDialogRadius: 16.0,
+    dialogElevation: 4.0,
   ),
   keyColors: const FlexKeyColors(
     useSecondary: true,
@@ -168,7 +157,8 @@ final darkTheme = FlexThemeData.dark(
   useMaterial3: true,
   swapLegacyOnMaterial3: true,
   // To use the Playground font, add GoogleFonts package and uncomment
-  // fontFamily: GoogleFonts.notoSans().fontFamily,
+  fontFamily: GoogleFonts.notoSans().fontFamily,
+  colorScheme: flexSchemeDark,
 );
 // If you do not have a themeMode switch, uncomment this line
 // to let the device system mode control the theme mode:
@@ -180,7 +170,8 @@ const ColorScheme flexSchemeDark = ColorScheme(
   onPrimary: Color(0xff000000),
   primaryContainer: Color(0xff00468c),
   onPrimaryContainer: Color(0xffffffff),
-  secondary: Color(0xffb8c8d9),
+  // secondary: Color(0xff213333),
+  secondary: Color(0xfffefefe),
   onSecondary: Color(0xff000000),
   secondaryContainer: Color(0xff394856),
   onSecondaryContainer: Color(0xffffffff),
@@ -210,9 +201,11 @@ const ColorScheme flexSchemeLight = ColorScheme(
   onPrimary: Color(0xffffffff),
   primaryContainer: Color(0xffd6e3ff),
   onPrimaryContainer: Color(0xff001b3d),
-  secondary: Color(0xff526070),
+  // secondary: Color(0xff526070),
+  secondary: Color(0xfffefefe),
   onSecondary: Color(0xffffffff),
-  secondaryContainer: Color(0xffd5e4f7),
+  // secondaryContainer: Color(0xffd5e4f7),
+  secondaryContainer: Color(0xfff8fafb),
   onSecondaryContainer: Color(0xff0f1d2a),
   tertiary: Color(0xff456179),
   onTertiary: Color(0xffffffff),
@@ -233,3 +226,15 @@ const ColorScheme flexSchemeLight = ColorScheme(
   inversePrimary: Color(0xffa9c7ff),
   surfaceTint: Color(0xff005db7),
 );
+
+class HexColor extends Color {
+  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
+
+  static int _getColorFromHex(String hexColor) {
+    hexColor = hexColor.toUpperCase().replaceAll('#', '');
+    if (hexColor.length == 6) {
+      hexColor = 'FF$hexColor';
+    }
+    return int.parse(hexColor, radix: 16);
+  }
+}

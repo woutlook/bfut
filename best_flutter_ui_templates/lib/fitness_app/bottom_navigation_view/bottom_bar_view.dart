@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 import 'package:bfut/fitness_app/fitness_app_theme.dart';
 import 'package:bfut/fitness_app/models/tab_icon_data.dart';
-import 'package:bfut/main.dart';
+import 'package:bfut/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class BottomBarView extends StatefulWidget {
@@ -31,6 +31,11 @@ class _BottomBarViewState extends State<BottomBarView>
 
   @override
   Widget build(BuildContext context) {
+    // final isLightMode =
+    //     Theme.of(context).colorScheme.brightness == Brightness.light;
+    // final shadowColor = isLightMode
+    //     ? Colors.grey.withOpacity(0.2)
+    //     : Colors.white.withOpacity(0.2);
     return Stack(
       alignment: AlignmentDirectional.bottomCenter,
       children: <Widget>[
@@ -40,8 +45,8 @@ class _BottomBarViewState extends State<BottomBarView>
             return Transform(
               transform: Matrix4.translationValues(0.0, 0.0, 0.0),
               child: PhysicalShape(
-                color: FitnessAppTheme.dark_grey,
-                elevation: 16.0,
+                color: Theme.of(context).colorScheme.surface,
+                elevation: 10.0,
                 clipper: TabClipper(
                     radius: Tween<double>(begin: 0.0, end: 1.0)
                             .animate(CurvedAnimation(
@@ -164,7 +169,7 @@ class _BottomBarViewState extends State<BottomBarView>
                           onTap: widget.addClick,
                           child: const Icon(
                             Icons.add,
-                            color: FitnessAppTheme.white,
+                            // color: FitnessAppTheme.white,
                             size: 32,
                           ),
                         ),
@@ -228,10 +233,10 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
       aspectRatio: 1,
       child: Center(
         child: InkWell(
-          splashColor: Colors.transparent,
-          focusColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          hoverColor: Colors.transparent,
+          // splashColor: Colors.transparent,
+          // focusColor: Colors.transparent,
+          // highlightColor: Colors.transparent,
+          // hoverColor: Colors.transparent,
           onTap: () {
             if (!widget.tabIconData!.isSelected) {
               setAnimation();
@@ -244,13 +249,31 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                 ScaleTransition(
                   alignment: Alignment.center,
                   scale: Tween<double>(begin: 0.88, end: 1.0).animate(
-                      CurvedAnimation(
-                          parent: widget.tabIconData!.animationController!,
-                          curve: const Interval(0.1, 1.0,
-                              curve: Curves.fastOutSlowIn))),
-                  child: Image.asset(widget.tabIconData!.isSelected
-                      ? widget.tabIconData!.selectedImagePath
-                      : widget.tabIconData!.imagePath),
+                    CurvedAnimation(
+                      parent: widget.tabIconData!.animationController!,
+                      curve: const Interval(
+                        0.1,
+                        1.0,
+                        curve: Curves.fastOutSlowIn,
+                      ),
+                    ),
+                  ),
+                  child: Icon(
+                    Icons.add,
+                    color: widget.tabIconData!.isSelected
+                        ? FitnessAppTheme.nearlyDarkBlue
+                        : FitnessAppTheme.grey,
+                    size: 40,
+                  ),
+                  // child: Image.asset(
+                  //   widget.tabIconData!.isSelected
+                  //       ? widget.tabIconData!.selectedImagePath
+                  //       : widget.tabIconData!.imagePath,
+                  //   colorBlendMode: BlendMode.darken,
+                  // width: 40,
+                  // color: widget.tabIconData!.isSelected
+                  //     ? FitnessAppTheme.nearlyDarkBlue
+                  //     : FitnessAppTheme.grey,
                 ),
                 Positioned(
                   top: 4,

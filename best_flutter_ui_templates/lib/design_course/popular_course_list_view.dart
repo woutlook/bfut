@@ -1,7 +1,8 @@
-import 'package:bfut/design_course/design_course_app_theme.dart';
 import 'package:bfut/design_course/models/category.dart';
-import 'package:bfut/main.dart';
+import 'package:bfut/app_theme.dart';
+import 'package:bfut/providers/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PopularCourseListView extends StatefulWidget {
   const PopularCourseListView({super.key, this.callBack});
@@ -75,7 +76,7 @@ class _PopularCourseListViewState extends State<PopularCourseListView>
   }
 }
 
-class CategoryView extends StatelessWidget {
+class CategoryView extends ConsumerWidget {
   const CategoryView(
       {super.key,
       this.category,
@@ -89,7 +90,10 @@ class CategoryView extends StatelessWidget {
   final Animation<double>? animation;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context, ref) {
+    final isLightMode = ref.watch(brightnessProvider) == Brightness.light;
+    final bkgColor = isLightMode ? HexColor('f8fafb') : HexColor('2c3239');
+    final iconColor = HexColor('00b6f0');
     return AnimatedBuilder(
       animation: animationController!,
       builder: (BuildContext context, Widget? child) {
@@ -111,11 +115,17 @@ class CategoryView extends StatelessWidget {
                         Expanded(
                           child: Container(
                             decoration: BoxDecoration(
-                              color: HexColor('#F8FAFB'),
+                              color: bkgColor,
+                              // color: Theme.of(context)
+                              //     .colorScheme
+                              //     .secondaryContainer,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(16.0)),
-                              // border: new Border.all(
-                              //     color: DesignCourseAppTheme.notWhite),
+                              // border: Border.all(
+                              //   color: Theme.of(context)
+                              //       .colorScheme
+                              //       .primaryContainer,
+                              // ),
                             ),
                             child: Column(
                               children: <Widget>[
@@ -132,8 +142,8 @@ class CategoryView extends StatelessWidget {
                                             fontWeight: FontWeight.w600,
                                             fontSize: 16,
                                             letterSpacing: 0.27,
-                                            color:
-                                                DesignCourseAppTheme.darkerText,
+                                            // color:
+                                            //     DesignCourseAppTheme.darkerText,
                                           ),
                                         ),
                                       ),
@@ -156,8 +166,8 @@ class CategoryView extends StatelessWidget {
                                                 fontWeight: FontWeight.w200,
                                                 fontSize: 12,
                                                 letterSpacing: 0.27,
-                                                color:
-                                                    DesignCourseAppTheme.grey,
+                                                // color:
+                                                //     DesignCourseAppTheme.grey,
                                               ),
                                             ),
                                             Row(
@@ -169,14 +179,13 @@ class CategoryView extends StatelessWidget {
                                                     fontWeight: FontWeight.w200,
                                                     fontSize: 18,
                                                     letterSpacing: 0.27,
-                                                    color: DesignCourseAppTheme
-                                                        .grey,
+                                                    // color: DesignCourseAppTheme
+                                                    //     .grey,
                                                   ),
                                                 ),
-                                                const Icon(
+                                                Icon(
                                                   Icons.star,
-                                                  color: DesignCourseAppTheme
-                                                      .nearlyBlue,
+                                                  color: iconColor,
                                                   size: 20,
                                                 ),
                                               ],
@@ -208,8 +217,12 @@ class CategoryView extends StatelessWidget {
                               const BorderRadius.all(Radius.circular(16.0)),
                           boxShadow: <BoxShadow>[
                             BoxShadow(
-                                color:
-                                    DesignCourseAppTheme.grey.withOpacity(0.2),
+                                // color:
+                                //     DesignCourseAppTheme.grey.withOpacity(0.2),
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .secondary
+                                    .withOpacity(0.7),
                                 offset: const Offset(0.0, 0.0),
                                 blurRadius: 6.0),
                           ],

@@ -1,23 +1,26 @@
 import 'dart:io';
 import 'package:bfut/app_theme.dart';
 import 'package:bfut/custom_drawer/drawer_user_controller.dart';
+import 'package:bfut/providers/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
-  ]).then((_) => runApp(const MyApp()));
+  ]).then((_) => runApp(const ProviderScope(child: MyApp())));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context, ref) {
+    final brightness = ref.watch(brightnessProvider);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
@@ -30,26 +33,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter UI',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        textTheme: AppTheme.textTheme,
-        // platform: TargetPlatform.iOS,
-      ),
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode:
+          brightness == Brightness.light ? ThemeMode.light : ThemeMode.dark,
       home: DrawerUserController(
         drawerWidth: MediaQuery.of(context).size.width * 0.75,
       ), //const NavigationHomeScreen(),
     );
-  }
-}
-
-class HexColor extends Color {
-  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
-
-  static int _getColorFromHex(String hexColor) {
-    hexColor = hexColor.toUpperCase().replaceAll('#', '');
-    if (hexColor.length == 6) {
-      hexColor = 'FF$hexColor';
-    }
-    return int.parse(hexColor, radix: 16);
   }
 }

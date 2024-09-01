@@ -1,9 +1,10 @@
-import 'package:bfut/design_course/design_course_app_theme.dart';
+import 'package:bfut/app_theme.dart';
 import 'package:bfut/design_course/models/category.dart';
-import 'package:bfut/main.dart';
+import 'package:bfut/providers/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CategoryListView extends StatefulWidget {
+class CategoryListView extends ConsumerStatefulWidget {
   const CategoryListView({super.key, this.callBack});
 
   final Function()? callBack;
@@ -11,7 +12,7 @@ class CategoryListView extends StatefulWidget {
   _CategoryListViewState createState() => _CategoryListViewState();
 }
 
-class _CategoryListViewState extends State<CategoryListView>
+class _CategoryListViewState extends ConsumerState<CategoryListView>
     with TickerProviderStateMixin {
   AnimationController? animationController;
 
@@ -79,7 +80,7 @@ class _CategoryListViewState extends State<CategoryListView>
   }
 }
 
-class CategoryView extends StatelessWidget {
+class CategoryView extends ConsumerWidget {
   const CategoryView(
       {super.key,
       this.category,
@@ -93,7 +94,10 @@ class CategoryView extends StatelessWidget {
   final Animation<double>? animation;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context, ref) {
+    final isLightMode = ref.watch(brightnessProvider) == Brightness.light;
+    final bkgColor = isLightMode ? HexColor('f8fafb') : HexColor('2c3239');
+    final iconColor = HexColor('00b6f0');
     return AnimatedBuilder(
       animation: animationController!,
       builder: (BuildContext context, Widget? child) {
@@ -117,7 +121,7 @@ class CategoryView extends StatelessWidget {
                         Expanded(
                           child: Container(
                             decoration: BoxDecoration(
-                              color: HexColor('#F8FAFB'),
+                              color: bkgColor,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(16.0)),
                             ),
@@ -140,8 +144,8 @@ class CategoryView extends StatelessWidget {
                                               fontWeight: FontWeight.w600,
                                               fontSize: 16,
                                               letterSpacing: 0.27,
-                                              color: DesignCourseAppTheme
-                                                  .darkerText,
+                                              // color: DesignCourseAppTheme
+                                              //     .darkerText,
                                             ),
                                           ),
                                         ),
@@ -162,8 +166,8 @@ class CategoryView extends StatelessWidget {
                                                   fontWeight: FontWeight.w200,
                                                   fontSize: 12,
                                                   letterSpacing: 0.27,
-                                                  color:
-                                                      DesignCourseAppTheme.grey,
+                                                  // color:
+                                                  // DesignCourseAppTheme.grey,
                                                 ),
                                               ),
                                               Row(
@@ -176,15 +180,14 @@ class CategoryView extends StatelessWidget {
                                                           FontWeight.w200,
                                                       fontSize: 18,
                                                       letterSpacing: 0.27,
-                                                      color:
-                                                          DesignCourseAppTheme
-                                                              .grey,
+                                                      // color:
+                                                      //     DesignCourseAppTheme
+                                                      // .grey,
                                                     ),
                                                   ),
-                                                  const Icon(
+                                                  Icon(
                                                     Icons.star,
-                                                    color: DesignCourseAppTheme
-                                                        .nearlyBlue,
+                                                    color: iconColor,
                                                     size: 20,
                                                   ),
                                                 ],
@@ -204,28 +207,27 @@ class CategoryView extends StatelessWidget {
                                               Text(
                                                 '\$${category!.money}',
                                                 textAlign: TextAlign.left,
-                                                style: const TextStyle(
+                                                style: TextStyle(
                                                   fontWeight: FontWeight.w600,
                                                   fontSize: 18,
                                                   letterSpacing: 0.27,
-                                                  color: DesignCourseAppTheme
-                                                      .nearlyBlue,
+                                                  color: iconColor,
                                                 ),
                                               ),
                                               Container(
-                                                decoration: const BoxDecoration(
-                                                  color: DesignCourseAppTheme
-                                                      .nearlyBlue,
+                                                decoration: BoxDecoration(
+                                                  color: iconColor,
                                                   borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(8.0)),
+                                                      const BorderRadius.all(
+                                                          Radius.circular(
+                                                              12.0)),
                                                 ),
                                                 child: const Padding(
                                                   padding: EdgeInsets.all(4.0),
                                                   child: Icon(
                                                     Icons.add,
-                                                    color: DesignCourseAppTheme
-                                                        .nearlyWhite,
+                                                    weight: 20,
+                                                    // color: iconColor,
                                                   ),
                                                 ),
                                               )

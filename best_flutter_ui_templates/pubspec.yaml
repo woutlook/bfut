@@ -34,6 +34,8 @@ dependencies:
   animations: ^2.0.3
   flex_color_scheme: ^7.3.1
   vector_math: ^2.1.4
+  google_fonts: ^6.2.1
+  flutter_riverpod: ^2.5.1
 
 dev_dependencies:
   flutter_test:

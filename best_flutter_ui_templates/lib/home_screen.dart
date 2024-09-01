@@ -1,15 +1,16 @@
-import 'package:bfut/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'model/homelist.dart';
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends ConsumerStatefulWidget {
   const MyHomePage({super.key});
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
+class _MyHomePageState extends ConsumerState<MyHomePage>
+    with TickerProviderStateMixin {
   List<HomeList> homeList = HomeList.homeList;
   AnimationController? animationController;
   bool multiple = true;
@@ -34,11 +35,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    var brightness = MediaQuery.of(context).platformBrightness;
-    bool isLightMode = brightness == Brightness.light;
+    // var brightness = ref.watch(brightnessProvider);
+    // bool isLightMode = brightness == Brightness.light;
     return Scaffold(
-      backgroundColor:
-          isLightMode == true ? AppTheme.white : AppTheme.nearlyBlack,
+      // backgroundColor:
+      //     isLightMode == true ? AppTheme.white : AppTheme.nearlyBlack,
       body: FutureBuilder<bool>(
         future: getData(),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
@@ -116,8 +117,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   }
 
   Widget appBar() {
-    var brightness = MediaQuery.of(context).platformBrightness;
-    bool isLightMode = brightness == Brightness.light;
+    // var brightness = ref.watch(brightnessProvider);
+    // bool isLightMode = brightness == Brightness.light;
     return SizedBox(
       height: AppBar().preferredSize.height,
       child: Row(
@@ -130,15 +131,15 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               height: AppBar().preferredSize.height - 8,
             ),
           ),
-          Expanded(
+          const Expanded(
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.only(top: 4),
+                padding: EdgeInsets.only(top: 4),
                 child: Text(
                   'Flutter UI',
                   style: TextStyle(
                     fontSize: 22,
-                    color: isLightMode ? AppTheme.darkText : AppTheme.white,
+                    // color: isLightMode ? AppTheme.darkText : AppTheme.white,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -147,10 +148,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8, right: 8),
-            child: Container(
+            child: SizedBox(
               width: AppBar().preferredSize.height - 8,
               height: AppBar().preferredSize.height - 8,
-              color: isLightMode ? Colors.white : AppTheme.nearlyBlack,
+              // color: isLightMode ? Colors.white : AppTheme.nearlyBlack,
               child: Material(
                 color: Colors.transparent,
                 child: InkWell(
@@ -158,7 +159,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       BorderRadius.circular(AppBar().preferredSize.height),
                   child: Icon(
                     multiple ? Icons.dashboard : Icons.view_agenda,
-                    color: isLightMode ? AppTheme.dark_grey : AppTheme.white,
+                    // color: isLightMode ? AppTheme.dark_grey : AppTheme.white,
                   ),
                   onTap: () {
                     setState(() {

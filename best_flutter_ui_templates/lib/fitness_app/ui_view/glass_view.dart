@@ -1,4 +1,4 @@
-import 'package:bfut/main.dart';
+import 'package:bfut/app_theme.dart';
 import 'package:flutter/material.dart';
 
 import '../fitness_app_theme.dart';

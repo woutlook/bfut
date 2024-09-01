@@ -1,12 +1,13 @@
-import 'package:bfut/app_theme.dart';
 import 'package:bfut/custom_drawer/home_drawer.dart';
 import 'package:bfut/feedback_screen.dart';
 import 'package:bfut/help_screen.dart';
 import 'package:bfut/home_screen.dart';
 import 'package:bfut/invite_friend_screen.dart';
+import 'package:bfut/providers/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DrawerUserController extends StatefulWidget {
+class DrawerUserController extends ConsumerStatefulWidget {
   const DrawerUserController({
     super.key,
     this.drawerWidth = 250,
@@ -15,10 +16,11 @@ class DrawerUserController extends StatefulWidget {
   final double drawerWidth;
 
   @override
-  State<DrawerUserController> createState() => _DrawerUserControllerState();
+  ConsumerState<DrawerUserController> createState() =>
+      _DrawerUserControllerState();
 }
 
-class _DrawerUserControllerState extends State<DrawerUserController>
+class _DrawerUserControllerState extends ConsumerState<DrawerUserController>
     with TickerProviderStateMixin {
   ScrollController? scrollController;
   AnimationController? iconAnimationController;
@@ -34,9 +36,10 @@ class _DrawerUserControllerState extends State<DrawerUserController>
     animationController = AnimationController(
         duration: const Duration(milliseconds: 2000), vsync: this);
     iconAnimationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 0));
+        vsync: this, duration: const Duration(milliseconds: 1000));
     iconAnimationController?.animateTo(1.0,
-        duration: const Duration(milliseconds: 0), curve: Curves.fastOutSlowIn);
+        duration: const Duration(milliseconds: 1000),
+        curve: Curves.fastOutSlowIn);
     scrollController =
         ScrollController(initialScrollOffset: widget.drawerWidth);
     scrollController!.addListener(() {
@@ -50,13 +53,13 @@ class _DrawerUserControllerState extends State<DrawerUserController>
           });
         }
         iconAnimationController?.animateTo(0.0,
-            duration: const Duration(milliseconds: 0),
+            duration: const Duration(milliseconds: 1000),
             curve: Curves.fastOutSlowIn);
       } else if (scrollController!.offset > 0 &&
           scrollController!.offset < widget.drawerWidth.floor()) {
         iconAnimationController?.animateTo(
             (scrollController!.offset * 100 / (widget.drawerWidth)) / 100,
-            duration: const Duration(milliseconds: 0),
+            duration: const Duration(milliseconds: 1000),
             curve: Curves.fastOutSlowIn);
       } else {
         if (scrolloffset != 0.0) {
@@ -68,7 +71,7 @@ class _DrawerUserControllerState extends State<DrawerUserController>
           });
         }
         iconAnimationController?.animateTo(1.0,
-            duration: const Duration(milliseconds: 0),
+            duration: const Duration(milliseconds: 1000),
             curve: Curves.fastOutSlowIn);
       }
     });
@@ -87,10 +90,12 @@ class _DrawerUserControllerState extends State<DrawerUserController>
 
   @override
   Widget build(BuildContext context) {
-    var brightness = MediaQuery.of(context).platformBrightness;
-    bool isLightMode = brightness == Brightness.light;
+    final brightness = ref.watch(brightnessProvider);
+    final isLightMode = brightness == Brightness.light;
+    final backgroundColor = Theme.of(context).colorScheme.surface;
+
     return Scaffold(
-      backgroundColor: isLightMode ? AppTheme.white : AppTheme.nearlyBlack,
+      backgroundColor: backgroundColor,
       body: SingleChildScrollView(
         controller: scrollController,
         scrollDirection: Axis.horizontal,
@@ -134,11 +139,11 @@ class _DrawerUserControllerState extends State<DrawerUserController>
                 height: MediaQuery.of(context).size.height,
                 //full-screen Width with widget.screenView
                 child: Container(
-                  decoration: BoxDecoration(
-                    color: AppTheme.white,
+                  decoration: const BoxDecoration(
+                    // color: AppTheme.white,
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                          color: AppTheme.grey.withOpacity(0.6),
+                          // color: AppTheme.grey.withOpacity(0.6),
                           blurRadius: 24),
                     ],
                   ),
@@ -200,7 +205,7 @@ class _DrawerUserControllerState extends State<DrawerUserController>
             child: Center(
               // if you use your own menu view UI you add form initialization
               child: AnimatedIcon(
-                  color: isLightMode ? AppTheme.dark_grey : AppTheme.white,
+                  // color: isLightMode ? AppTheme.dark_grey : AppTheme.white,
                   icon: animatedIconData ?? AnimatedIcons.arrow_menu,
                   progress: iconAnimationController!),
             ),

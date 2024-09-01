@@ -1,53 +1,55 @@
 import 'package:bfut/design_course/category_list_view.dart';
 import 'package:bfut/design_course/course_info_screen.dart';
 import 'package:bfut/design_course/popular_course_list_view.dart';
-import 'package:bfut/main.dart';
+import 'package:bfut/app_theme.dart';
+import 'package:bfut/providers/utils.dart';
 import 'package:flutter/material.dart';
-import 'design_course_app_theme.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DesignCourseHomeScreen extends StatefulWidget {
+class DesignCourseHomeScreen extends ConsumerStatefulWidget {
   const DesignCourseHomeScreen({super.key});
 
   @override
   _DesignCourseHomeScreenState createState() => _DesignCourseHomeScreenState();
 }
 
-class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
+class _DesignCourseHomeScreenState
+    extends ConsumerState<DesignCourseHomeScreen> {
   CategoryType categoryType = CategoryType.ui;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: InkWell(
+        splashColor: Colors.transparent,
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
         },
-        child: Container(
-          color: DesignCourseAppTheme.nearlyWhite,
-          child: Column(
-            children: <Widget>[
-              SizedBox(
-                height: MediaQuery.of(context).padding.top,
-              ),
-              getAppBarUI(),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    child: Column(
-                      children: <Widget>[
-                        getSearchBarUI(),
-                        getCategoryUI(),
-                        Flexible(
-                          child: getPopularCourseUI(),
-                        ),
-                      ],
-                    ),
+        child: Column(
+          children: <Widget>[
+            SizedBox(
+              height: MediaQuery.of(context).padding.top,
+            ),
+            getAppBarUI(),
+            Expanded(
+              child: SingleChildScrollView(
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: Column(
+                    children: <Widget>[
+                      // getSearchBarUI(),
+                      _createSearchBar(),
+                      getCategoryUI(),
+                      Flexible(
+                        child: getPopularCourseUI(),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -67,7 +69,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
               fontWeight: FontWeight.w600,
               fontSize: 22,
               letterSpacing: 0.27,
-              color: DesignCourseAppTheme.darkerText,
+              // color: DesignCourseAppTheme.darkerText,
             ),
           ),
         ),
@@ -78,16 +80,16 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
           padding: const EdgeInsets.only(left: 16, right: 16),
           child: Row(
             children: <Widget>[
-              getButtonUI(CategoryType.ui, categoryType == CategoryType.ui),
+              _createButtonUI(CategoryType.ui, categoryType == CategoryType.ui),
               const SizedBox(
                 width: 16,
               ),
-              getButtonUI(
+              _createButtonUI(
                   CategoryType.coding, categoryType == CategoryType.coding),
               const SizedBox(
                 width: 16,
               ),
-              getButtonUI(
+              _createButtonUI(
                   CategoryType.basic, categoryType == CategoryType.basic),
             ],
           ),
@@ -118,7 +120,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
               fontWeight: FontWeight.w600,
               fontSize: 22,
               letterSpacing: 0.27,
-              color: DesignCourseAppTheme.darkerText,
+              // color: DesignCourseAppTheme.darkerText,
             ),
           ),
           Flexible(
@@ -142,7 +144,10 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     );
   }
 
-  Widget getButtonUI(CategoryType categoryTypeData, bool isSelected) {
+  Widget _createButtonUI(CategoryType categoryTypeData, bool isSelected) {
+    final isLightMode = ref.watch(brightnessProvider) == Brightness.light;
+    final selColor = HexColor('00b6f0');
+    final unselColor = isLightMode ? Colors.white : Colors.black;
     String txt = '';
     if (CategoryType.ui == categoryTypeData) {
       txt = 'Ui/Ux';
@@ -151,40 +156,55 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
     } else if (CategoryType.basic == categoryTypeData) {
       txt = 'Basic UI';
     }
-    return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-            color: isSelected
-                ? DesignCourseAppTheme.nearlyBlue
-                : DesignCourseAppTheme.nearlyWhite,
-            borderRadius: const BorderRadius.all(Radius.circular(24.0)),
-            border: Border.all(color: DesignCourseAppTheme.nearlyBlue)),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            splashColor: Colors.white24,
-            borderRadius: const BorderRadius.all(Radius.circular(24.0)),
-            onTap: () {
-              setState(() {
-                categoryType = categoryTypeData;
-              });
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  top: 12, bottom: 12, left: 18, right: 18),
-              child: Center(
-                child: Text(
-                  txt,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 12,
-                    letterSpacing: 0.27,
-                    color: isSelected
-                        ? DesignCourseAppTheme.nearlyWhite
-                        : DesignCourseAppTheme.nearlyBlue,
-                  ),
-                ),
+    return FilledButton(
+      onPressed: () {
+        setState(() {
+          categoryType = categoryTypeData;
+        });
+      },
+      style: ButtonStyle(
+        backgroundColor: isSelected
+            ? WidgetStateProperty.all<Color>(selColor)
+            : WidgetStateProperty.all<Color>(unselColor),
+        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+            side: BorderSide(
+              color: selColor,
+            ),
+          ),
+        ),
+      ),
+      child: Text(
+        txt,
+        style: TextStyle(
+          color: isSelected ? Colors.white : selColor,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Widget _createSearchBar() {
+    final isLightMode = ref.watch(brightnessProvider) == Brightness.light;
+    final fillColor = isLightMode ? HexColor('#F8FAFB') : HexColor('#1a1a1a');
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Align(
+        alignment: Alignment.topLeft,
+        child: SizedBox(
+          width: 250,
+          child: TextField(
+            decoration: InputDecoration(
+              hintText: 'Search for course',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide.none,
+              ),
+              filled: true,
+              fillColor: fillColor,
+              prefixIcon: const Icon(
+                Icons.search,
               ),
             ),
           ),
@@ -225,32 +245,35 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                             fontFamily: 'WorkSans',
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
-                            color: DesignCourseAppTheme.nearlyBlue,
+                            // color: DesignCourseAppTheme.nearlyBlue,
                           ),
                           keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Search for course',
                             border: InputBorder.none,
                             helperStyle: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
-                              color: HexColor('#B9BABC'),
+                              // color: HexColor('#B9BABC'),
                             ),
                             labelStyle: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 16,
                               letterSpacing: 0.2,
-                              color: HexColor('#B9BABC'),
+                              // color: HexColor('#B9BABC'),
                             ),
                           ),
                           onEditingComplete: () {},
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 60,
                       height: 60,
-                      child: Icon(Icons.search, color: HexColor('#B9BABC')),
+                      child: Icon(
+                        Icons.search,
+                        // color: HexColor('#B9BABC'),
+                      ),
                     )
                   ],
                 ),
@@ -282,7 +305,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                     fontWeight: FontWeight.w400,
                     fontSize: 14,
                     letterSpacing: 0.2,
-                    color: DesignCourseAppTheme.grey,
+                    // color: DesignCourseAppTheme.grey,
                   ),
                 ),
                 Text(
@@ -292,7 +315,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                     fontWeight: FontWeight.bold,
                     fontSize: 22,
                     letterSpacing: 0.27,
-                    color: DesignCourseAppTheme.darkerText,
+                    // color: DesignCourseAppTheme.darkerText,
                   ),
                 ),
               ],
